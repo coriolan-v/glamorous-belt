@@ -39,7 +39,8 @@ CRGBPalette16 currentPalette;
 TBlendType    currentBlending;
 
 extern CRGBPalette16 myRedWhiteBluePalette;
-extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
+extern const TProgmemPalette16 PinkPalette PROGMEM;
+extern const TProgmemPalette16 YellowPalette PROGMEM;
 int sensorPin = A11;    // select the input pin for the potentiometer
 
 bool gReverseDirection = false;
@@ -62,6 +63,8 @@ void setup() {
   gPal = CRGBPalette16( CRGB::Black, CRGB::Pink, CRGB::Pink,  CRGB::White);
 
   //FillLEDsFromPaletteColors();
+
+chooseRandomPalette();
 
    readPot();
 }
@@ -95,7 +98,8 @@ void loop()
 
   //if (animationMode == 0)
   //{
-    currentPalette = myRedWhiteBluePalette_p;           currentBlending = LINEARBLEND;
+         
+    currentBlending = LINEARBLEND;
     static uint8_t startIndex = 0;
     startIndex = startIndex + 1; /* motion speed */
 
@@ -118,6 +122,18 @@ void loop()
 
  
 
+}
+
+void chooseRandomPalette()
+{
+  randomSeed(analogRead(1));
+  int randomNum = random(0, 2);
+  if(randomNum == 0)
+  {
+ currentPalette = YellowPalette;         
+  } else {
+    currentPalette = PinkPalette;     
+  }
 }
 
 unsigned long previousMillis = 0;  // will store last time LED was updated
@@ -206,11 +222,11 @@ void ChangePalettePeriodically()
       currentBlending = LINEARBLEND;
     }
     if ( secondHand == 50)  {
-      currentPalette = myRedWhiteBluePalette_p;
+      currentPalette = PinkPalette;
       currentBlending = NOBLEND;
     }
     if ( secondHand == 55)  {
-      currentPalette = myRedWhiteBluePalette_p;
+      currentPalette = PinkPalette;
       currentBlending = LINEARBLEND;
     }
   }
@@ -259,7 +275,7 @@ void SetupPurpleAndGreenPalette()
 // which is stored in PROGMEM (flash), which is almost always more
 // plentiful than RAM.  A static PROGMEM palette like this
 // takes up 64 bytes of flash.
-const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM =
+const TProgmemPalette16 PinkPalette PROGMEM =
 {
   CRGB::DeepPink,
   CRGB::Gray, // 'white' is too bright compared to red and blue
@@ -277,6 +293,28 @@ const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM =
   CRGB::DeepPink,
   CRGB::DeepPink,
   CRGB::DeepPink,
+  CRGB::Gray,
+  CRGB::Gray
+};
+
+const TProgmemPalette16 YellowPalette PROGMEM =
+{
+  CRGB::Yellow,
+  CRGB::Gray, // 'white' is too bright compared to red and blue
+  CRGB::Yellow,
+  CRGB::Black,
+
+  CRGB::Yellow,
+  CRGB::Gray,
+  CRGB::Yellow,
+  CRGB::Black,
+
+  CRGB::Yellow,
+  CRGB::Yellow,
+  CRGB::Yellow,
+  CRGB::Yellow,
+  CRGB::Yellow,
+  CRGB::Yellow,
   CRGB::Gray,
   CRGB::Gray
 };
