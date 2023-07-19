@@ -1,6 +1,7 @@
 #include <FastLED.h>
 
 #define LED_PIN A0
+#define LED_PIN_2 A1
 #define NUM_LEDS 200
 #define BRIGHTNESS 64
 #define LED_TYPE WS2811
@@ -55,6 +56,7 @@ void setup() {
   Serial.begin(9600);
   delay(1000);  // power-up safety delay
   FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+  FastLED.addLeds<LED_TYPE, LED_PIN_2, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(BRIGHTNESS);
 
   currentPalette = RainbowColors_p;
